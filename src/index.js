@@ -4,6 +4,8 @@ import { engine } from "express-handlebars";
 import { fileURLToPath } from "url";
 import config from "./config.js";
 import { connectToDb } from "./db/index.js";
+import { authMiddleware } from "./middlewares/auth.js";
+import authRouter from "./routes/auth.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
@@ -25,6 +27,13 @@ app.engine(
 );
 
 await connectToDb();
+
+app.use("/", authRouter);
+app.use(authMiddleware);
+app.get("/", (req, res) => {
+  if (req.user) res.redirect("/recipes");
+  else res.redirect("/login");
+});
 
 const server = app.listen(config.port, () => {
   console.log(`Server listening on port ${config.port}`);
