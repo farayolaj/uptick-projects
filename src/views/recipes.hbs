@@ -1,0 +1,9 @@
+<div class="flex justify-between my-8">
+  <a href="/recipes/new" class="button">New Recipe</a>
+  <a href="/logout" class="button">Log Out</a>
+</div>
+<ul class="flex flex-col gap-8">
+  {{#each recipes}}
+    {{> recipe-card this}}
+  {{/each}}
+</ul>

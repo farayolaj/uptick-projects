@@ -1,0 +1,11 @@
+{{! A card styled using tailwind. It has a heading and a body. }}
+<li class="bg-white rounded-lg px-6 py-4 border">
+  <span class="text-lg font-semibold text-gray-800">{{title}}
+    -
+    <span class="italic">{{description}}</span></span>
+  <ul class="mt-1 text-md text-gray-600">
+    {{#each ingredients}}
+      <li>{{this.name}} ({{this.quantity}} {{this.unit}})</li>
+    {{/each}}
+  </ul>
+</li>
