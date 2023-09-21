@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import { engine } from "express-handlebars";
+import session from "express-session";
 import { fileURLToPath } from "url";
 import config from "./config.js";
 import { connectToDb } from "./db/index.js";
@@ -13,6 +14,15 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: config.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: config.isProduction, httpOnly: true },
+  })
+);
 
 app.set("view engine", ".hbs");
 app.set("views", __dirname + "/views");
