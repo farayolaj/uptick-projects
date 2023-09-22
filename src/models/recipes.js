@@ -17,8 +17,18 @@ async function getRecipesByUser(userId) {
   return recipes;
 }
 
+async function deleteRecipeById(recipeId) {
+  const [recipe] = await db("recipes")
+    .where({ id: recipeId })
+    .del()
+    .returning("*");
+
+  return recipe;
+}
+
 const recipeModel = {
   getRecipesByUser,
+  deleteRecipeById,
 };
 
 export default recipeModel;

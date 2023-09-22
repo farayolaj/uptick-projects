@@ -1,8 +1,13 @@
 {{! A card styled using tailwind. It has a heading and a body. }}
 <li class="bg-white rounded-lg px-6 py-4 border">
-  <span class="text-lg font-semibold text-gray-800">{{title}}
-    -
-    <span class="italic">{{description}}</span></span>
+  <div class="flex justify-between">
+    <span class="text-lg font-semibold text-gray-800">{{title}}
+      -
+      <span class="italic">{{description}}</span></span>
+    <a href="/recipes/{{id}}/delete" class="bg-transparent text-red-500"><span
+        data-feather="trash-2"
+      /></a>
+  </div>
   <ul class="mt-1 text-md text-gray-600">
     {{#each ingredients}}
       <li>{{this.name}} ({{this.quantity}} {{this.unit}})</li>

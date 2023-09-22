@@ -2,6 +2,13 @@
   <a href="/recipes/new" class="button">New Recipe</a>
   <a href="/logout" class="button">Log Out</a>
 </div>
+{{#if deletedRecipe}}
+<div class="mt-8">
+  <p class="alert success">
+    {{ deletedRecipe.title }} was deleted successfully.
+  </p>
+</div>
+{{/if}}
 <ul class="flex flex-col gap-8">
   {{#each recipes}}
     {{> recipe-card this}}
