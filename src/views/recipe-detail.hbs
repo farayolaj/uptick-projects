@@ -1,0 +1,56 @@
+<a href="/recipes" class="block my-8" >&rarr; Back to recipe list</a>
+<h1 class="font-bold text-xl">
+  {{recipe.title}}
+</h1>
+<span class="italic">{{recipe.description}}</span>
+<h3 class="text-lg font-600 leading-9 tracking tight mt-3">Ingredients</h3>
+<ul class="mt-1 text-md text-gray-600">
+  {{#each recipe.ingredients}}
+    <li class="mb-2 flex">{{this.name}}
+      ({{this.quantity}}
+      {{this.unit}})
+      <a
+        href="/recipes/ingredients/{{this.id}}/delete"
+        class="ml-4 text-red-500"
+      ><span data-feather="trash-2"></span></a></li>
+  {{/each}}
+</ul>
+<form action="/recipes/{{recipe.id}}/ingredients" method="post">
+  <div class="flex gap-4 justify-between mt-8">
+    <div class="w-[40%]">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="mt-2 form-input"
+        required
+      />
+    </div>
+    <div class="w-[30%]">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input
+        type="number"
+        id="quantity"
+        name="quantity"
+        class="mt-2 form-input"
+        required
+      />
+    </div>
+    <div class="w-[30%]">
+      <label for="unit" class="form-label">Unit</label>
+      <input
+        type="text"
+        id="unit"
+        name="unit"
+        class="mt-2 form-input"
+        required
+      />
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="mt-4 bg-indigo-600 hover:bg-indigo-500"
+    aria-label="Add ingredient"
+  >Add ingredient</button>
+</form>

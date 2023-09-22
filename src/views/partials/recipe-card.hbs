@@ -1,9 +1,9 @@
 {{! A card styled using tailwind. It has a heading and a body. }}
-<li class="bg-white rounded-lg px-6 py-4 border">
+<li class="bg-white rounded-lg px-6 py-4 border hover:border-indigo-500">
   <div class="flex justify-between">
-    <span class="text-lg font-semibold text-gray-800">{{title}}
+    <a href="/recipes/{{id}}" class="text-lg font-semibold text-gray-800">{{title}}
       -
-      <span class="italic">{{description}}</span></span>
+      <span class="italic">{{description}}</span></a>
     <a href="/recipes/{{id}}/delete" class="bg-transparent text-red-500"><span
         data-feather="trash-2"
       /></a>
