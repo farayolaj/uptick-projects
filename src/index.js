@@ -1,3 +1,4 @@
+import connectPgSimple from "connect-pg-simple";
 import "dotenv/config";
 import express from "express";
 import { engine } from "express-handlebars";
@@ -15,9 +16,14 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const PgStore = connectPgSimple(session);
 
 app.use(
   session({
+    store: new PgStore({
+      conString: config.db.url,
+      createTableIfMissing: true,
+    }),
     secret: config.sessionSecret,
     resave: false,
     saveUninitialized: false,
