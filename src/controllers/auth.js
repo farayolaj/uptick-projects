@@ -78,3 +78,8 @@ export async function signup(req, res) {
     return res.render("signup", { error: errMessage, data: req.body });
   }
 }
+
+export function logout(req, res) {
+  req.session.destroy();
+  res.redirect("/");
+}
