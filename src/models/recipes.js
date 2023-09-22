@@ -1,6 +1,6 @@
 import { db } from "../db/index.js";
 
-export async function getRecipesByUser(userId) {
+async function getRecipesByUser(userId) {
   const recipes = await db("recipes")
     .select([
       "recipes.id",
@@ -16,3 +16,9 @@ export async function getRecipesByUser(userId) {
 
   return recipes;
 }
+
+const recipeModel = {
+  getRecipesByUser,
+};
+
+export default recipeModel;

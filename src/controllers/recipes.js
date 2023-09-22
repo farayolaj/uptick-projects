@@ -1,6 +1,12 @@
-import { getRecipesByUser } from "../models/recipes.js";
+import recipeModel from "../models/recipes.js";
 
-export async function getRecipes(req, res) {
-  const recipes = await getRecipesByUser(req.session.user.id);
+async function getRecipes(req, res) {
+  const recipes = await recipeModel.getRecipesByUser(req.session.user.id);
   res.render("recipes", { recipes });
 }
+
+const recipeController = {
+  getRecipes,
+};
+
+export default recipeController;

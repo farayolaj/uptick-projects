@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getRecipes } from "../controllers/recipes.js";
+import recipeController from "../controllers/recipes.js";
 
 const recipeRouter = Router();
 
-recipeRouter.get("/", getRecipes);
+recipeRouter.get("/", recipeController.getRecipes);
 
 export default recipeRouter;

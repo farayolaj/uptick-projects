@@ -1,12 +1,12 @@
 import { ZodError, z } from "zod";
 import { fromZodError } from "zod-validation-error";
-import { createUser, validateUser } from "../models/users.js";
+import userModel from "../models/users.js";
 
-export async function getLoginPage(req, res) {
+async function getLoginPage(req, res) {
   res.render("login");
 }
 
-export async function login(req, res) {
+async function login(req, res) {
   const schema = z
     .object({
       email: z.string().email(),
@@ -17,7 +17,7 @@ export async function login(req, res) {
   try {
     const { email, password } = schema.parse(req.body);
 
-    const user = await validateUser({ email, password });
+    const user = await userModel.validateUser({ email, password });
     req.session.user = user;
 
     return res.redirect("/");
@@ -40,11 +40,11 @@ export async function login(req, res) {
   }
 }
 
-export async function getSignupPage(req, res) {
+async function getSignupPage(req, res) {
   res.render("signup");
 }
 
-export async function signup(req, res) {
+async function signup(req, res) {
   const schema = z
     .object({
       firstName: z.string(),
@@ -62,7 +62,12 @@ export async function signup(req, res) {
   try {
     const { firstName, lastName, email, password } = schema.parse(req.body);
 
-    const user = await createUser({ firstName, lastName, email, password });
+    const user = await userModel.createUser({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
     req.session.user = user;
 
     return res.redirect("/");
@@ -79,7 +84,17 @@ export async function signup(req, res) {
   }
 }
 
-export function logout(req, res) {
+function logout(req, res) {
   req.session.destroy();
   res.redirect("/");
 }
+
+const authController = {
+  getLoginPage,
+  login,
+  getSignupPage,
+  signup,
+  logout,
+};
+
+export default authController;

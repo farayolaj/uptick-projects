@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
 import { db } from "../db/index.js";
 
-export async function getUserById(id) {
+async function getUserById(id) {
   const user = await db("users").where({ id }).first();
   return user;
 }
 
-export async function getUserByEmail(email) {
+async function getUserByEmail(email) {
   const user = await db("users").where({ email }).first();
   return user;
 }
@@ -15,7 +15,7 @@ async function hashPassword(password) {
   return await bcrypt.hash(password, 10);
 }
 
-export async function createUser({ email, password, firstName, lastName }) {
+async function createUser({ email, password, firstName, lastName }) {
   const hashedPassword = await hashPassword(password);
   const [user] = await db("users")
     .insert({
@@ -29,7 +29,7 @@ export async function createUser({ email, password, firstName, lastName }) {
   return user;
 }
 
-export async function validateUser({ email, password }) {
+async function validateUser({ email, password }) {
   const user = await getUserByEmail(email);
 
   if (!user) throw new Error("Invalid login details");
@@ -40,3 +40,12 @@ export async function validateUser({ email, password }) {
 
   return user;
 }
+
+const userModel = {
+  getUserById,
+  getUserByEmail,
+  createUser,
+  validateUser,
+};
+
+export default userModel;
