@@ -69,8 +69,8 @@ const server = app.listen(config.port, () => {
 });
 
 process.on("SIGTERM", () => {
-  debug("SIGTERM signal received: closing server");
+  console.log("SIGTERM signal received: closing server");
   server.close(() => {
-    debug("Server closed");
+    console.log("Server closed");
   });
 });
