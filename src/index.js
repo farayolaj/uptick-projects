@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from "express";
 import { engine } from "express-handlebars";
 import session from "express-session";
+import pg from "pg";
 import { fileURLToPath } from "url";
 import config from "./config.js";
 import { connectToDb } from "./db/index.js";
@@ -16,12 +17,23 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const pgPool = new pg.Pool({
+  connectionString: config.db.url,
+  ssl: config.isProduction
+    ? {
+        rejectUnauthorized: false,
+      }
+    : undefined,
+  min: 1,
+  max: 2,
+});
 const PgStore = connectPgSimple(session);
 
 app.use(
   session({
     store: new PgStore({
-      conString: config.db.url,
+      pool: pgPool,
       createTableIfMissing: true,
     }),
     secret: config.sessionSecret,
