@@ -7,7 +7,14 @@ import config from "./src/config.js";
  */
 const knexConfig = {
   client: "postgresql",
-  connection: config.db.url,
+  connection: {
+    connectionString: config.db.url,
+    ssl: config.isProduction
+      ? {
+          rejectUnauthorized: false,
+        }
+      : undefined,
+  },
   pool: {
     min: 2,
     max: 10,
