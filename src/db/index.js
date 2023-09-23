@@ -10,7 +10,14 @@ export async function connectToDb() {
   if (!db) {
     db = knex({
       client: "pg",
-      connection: config.db.url,
+      connection: {
+        connectionString: config.db.url,
+        ssl: config.isProduction
+          ? {
+              rejectUnauthorized: false,
+            }
+          : undefined,
+      },
     });
 
     try {
