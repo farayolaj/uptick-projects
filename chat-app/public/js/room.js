@@ -59,7 +59,8 @@ const handlers = {
   "user-left": displayUserLeft,
 };
 
-const primus = new Primus("ws://localhost:5000/primus");
+const wsHost = location.origin.replace(/^https?/, "ws");
+const primus = new Primus(wsHost);
 
 primus.on("open", () => {
   console.log("Connected to server");
