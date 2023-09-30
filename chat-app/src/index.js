@@ -6,6 +6,7 @@ import { initPrimus } from "./primus.js";
 const server = createServer(app);
 let liveServer;
 
+// Only enable in development
 if (!config.isProduction) {
   liveServer = createServer();
   const livereload = await import("livereload");
