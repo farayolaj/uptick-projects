@@ -1,5 +1,5 @@
 {
-  "ext": "js,ejs",
+  "ext": "js,hbs",
   "watch": ["./src"],
   "verbose": true,
   "exec": "node src/index.js"
