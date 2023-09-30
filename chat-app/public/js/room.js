@@ -59,7 +59,7 @@ const handlers = {
   "user-left": displayUserLeft,
 };
 
-const wsHost = location.origin.replace(/^https?/, "ws");
+const wsHost = location.origin.replace(/^http?/, "ws");
 const primus = new Primus(wsHost);
 
 primus.on("open", () => {
