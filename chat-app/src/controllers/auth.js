@@ -19,6 +19,7 @@ async function login(req, res) {
 
     const user = await userModel.validateUser({ email, password });
     req.session.user = user;
+    req.session.save();
 
     return res.redirect("/");
   } catch (error) {
@@ -69,6 +70,7 @@ async function signup(req, res) {
       password,
     });
     req.session.user = user;
+    req.session.save();
 
     return res.redirect("/");
   } catch (error) {
