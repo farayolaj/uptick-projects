@@ -1,0 +1,16 @@
+<div class="flex justify-end my-8">
+  <a href="/logout" class="button">Log Out</a>
+</div>
+{{#if message}}
+  <div class="my-4 alert success">{{message}}</div>
+{{/if}}
+<ul role="list" class="mt-5 flex flex-col gap-3">
+  {{#each rooms}}
+    {{> room-list-item this}}
+  {{/each}}
+</ul>
+<form class="flex gap-3 mt-8" action="/rooms" method="post">
+  <label for="name" class="sr-only">Add Room</label>
+  <input  class="border rounded-md px-2 flex-grow" type="text" name="name" id="name" placeholder="Room name" />
+  <button type="submit" class="button">Add Room</button>
+</form>
