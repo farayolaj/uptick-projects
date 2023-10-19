@@ -10,6 +10,9 @@ dependencies:
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
+  dotenv-expand:
+    specifier: ^10.0.0
+    version: 10.0.0
   express:
     specifier: ^4.18.2
     version: 4.18.2
@@ -508,6 +511,11 @@ packages:
       enabled: 2.0.0
       kuler: 2.0.0
       storage-engine: 3.0.7
+    dev: false
+
+  /dotenv-expand@10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
     dev: false
 
   /dotenv@16.3.1:

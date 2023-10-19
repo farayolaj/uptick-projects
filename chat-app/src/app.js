@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express from "express";
 import { engine } from "express-handlebars";
 import handlebarsDateFormat from "handlebars-dateformat";
