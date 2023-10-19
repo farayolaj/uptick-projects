@@ -12,11 +12,6 @@ export async function connectToDb() {
       client: "pg",
       connection: {
         connectionString: config.db.url,
-        ssl: config.isProduction
-          ? {
-              rejectUnauthorized: false,
-            }
-          : undefined,
       },
     });
 

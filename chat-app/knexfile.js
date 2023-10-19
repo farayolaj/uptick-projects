@@ -9,11 +9,6 @@ const knexConfig = {
   client: "postgresql",
   connection: {
     connectionString: config.db.url,
-    ssl: config.isProduction
-      ? {
-          rejectUnauthorized: false,
-        }
-      : undefined,
   },
   pool: {
     min: 2,
