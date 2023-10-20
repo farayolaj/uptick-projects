@@ -1,0 +1,51 @@
+services:
+  chat_db:
+    image: postgres:14.5-alpine
+    volumes:
+      - chat-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB: chat_app
+    secrets:
+      - db_password
+
+  chat_app:
+    image: farayolaj/uptick-chat-app
+    expose:
+      - "5000"
+    depends_on:
+      - chat_db
+    restart: on-failure
+    environment:
+      DATABASE_URL_FILE: /run/secrets/db_url
+      SESSION_SECRET_FILE: /run/secrets/secret_key
+    secrets:
+      - secret_key
+      - db_url
+
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - chat_app
+    restart: on-failure
+    ports:
+      - "4000:4000"
+
+networks:
+  default:
+    driver: bridge
+    name: chat-app-net
+
+secrets:
+  secret_key:
+    file: .secrets/secret_key.txt
+  db_password:
+    file: .secrets/db_password.txt
+  db_url:
+    file: .secrets/db_url.txt
+
+volumes:
+  chat-data:
