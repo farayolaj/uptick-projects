@@ -16,6 +16,8 @@ services:
       - "5000"
     depends_on:
       - chat_db
+    deploy:
+      replicas: 4
     restart: on-failure
     environment:
       DATABASE_URL_FILE: /run/secrets/db_url
