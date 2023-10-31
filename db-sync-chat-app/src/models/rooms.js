@@ -1,4 +1,5 @@
-import { db } from "../db/relational.js/index.js";
+import { Room, User } from "../db/mongo.js";
+import { db } from "../db/relational.js";
 
 async function createRoom({ name, userId }) {
   const [room] = await db("rooms")
@@ -7,6 +8,14 @@ async function createRoom({ name, userId }) {
       created_by: userId,
     })
     .returning("*");
+
+  const mongoUser = await User.findByPgId(userId);
+  const mongoRoom = new Room({
+    pgId: room.id,
+    name,
+    createdBy: mongoUser._id,
+  });
+  await mongoRoom.save();
 
   return room;
 }

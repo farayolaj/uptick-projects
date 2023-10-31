@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
-import { db } from "../db/relational.js/index.js";
+import { User } from "../db/mongo.js";
+import { db } from "../db/relational.js";
 
 async function getUserById(id) {
   const user = await db("users").where({ id }).first();
@@ -25,6 +26,15 @@ async function createUser({ email, password, firstName, lastName }) {
       lastName,
     })
     .returning("*");
+
+  const mongoUser = new User({
+    pgId: user.id,
+    email,
+    password: hashedPassword,
+    firstName,
+    lastName,
+  });
+  await mongoUser.save();
 
   return user;
 }

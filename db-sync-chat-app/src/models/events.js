@@ -1,4 +1,5 @@
-import { db } from "../db/relational.js/index.js";
+import { Event, User } from "../db/mongo.js";
+import { db } from "../db/relational.js";
 
 /**
  * @typedef {Object} RoomEvent
@@ -33,6 +34,18 @@ async function createEvent({ title, data, roomId, userId }) {
         `json_build_object('id', "users"."id", 'firstName', "users"."firstName", 'lastName', "users"."lastName") as user`
       )
     );
+
+  const mongoUser = User.findByPgId(userId);
+  const mongoRoom = User.findByPgId(roomId);
+  const mongoEvent = new Event({
+    pgId: event.id,
+    title,
+    data,
+    user: mongoUser._id,
+    room: mongoRoom._id,
+    timestamp: event.timestamp,
+  });
+  await mongoEvent.save();
 
   return event;
 }

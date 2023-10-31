@@ -17,9 +17,9 @@ export async function connectToDb() {
 
     try {
       await db.raw("SELECT 1");
-      console.log("Connected to database");
+      console.log("Connected to postgres database");
     } catch (error) {
-      console.error("Could not connect to database", error);
+      console.error("Could not connect to postgres database", error);
       process.exit(1);
     }
   }
@@ -30,7 +30,7 @@ export async function disconnectFromDb() {
     try {
       await db.destroy();
     } catch (error) {
-      console.error("Error disconnecting from database", error);
+      console.error("Error disconnecting from postgres database", error);
     }
   }
 }

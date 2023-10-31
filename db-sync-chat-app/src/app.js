@@ -3,7 +3,8 @@ import { engine } from "express-handlebars";
 import handlebarsDateFormat from "handlebars-dateformat";
 import { join } from "path";
 import { fileURLToPath } from "url";
-import { connectToDb } from "./db/relational.js/index.js";
+import connectToMongoDb from "./db/mongo.js";
+import { connectToDb } from "./db/relational.js";
 import { authMiddleware } from "./middlewares/auth.js";
 import sessionMiddleware from "./middlewares/session.js";
 import authRouter from "./routes/auth.js";
@@ -38,6 +39,7 @@ app.engine(
 );
 
 await connectToDb();
+await connectToMongoDb();
 
 app.use("/", authRouter);
 app.use(authMiddleware);

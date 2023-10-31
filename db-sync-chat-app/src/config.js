@@ -1,6 +1,7 @@
 export default {
   db: {
     url: process.env.DATABASE_URL,
+    mongoUrl: process.env.MONGO_URL,
   },
   sessionSecret: process.env.SESSION_SECRET,
   port: process.env.PORT || 5000,

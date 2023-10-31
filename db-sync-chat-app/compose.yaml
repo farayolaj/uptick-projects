@@ -10,18 +10,26 @@ services:
     secrets:
       - db_password
 
+  chat_mongo_db:
+    image: mongo
+    restart: always
+    volumes:
+      - chat-mongo-data:/data/db
+
   chat_app:
-    image: farayolaj/uptick-chat-app
+    image: farayolaj/uptick-chat-app-db-sync
     expose:
       - "5000"
     depends_on:
       - chat_db
+      - chat_mongo_db
     deploy:
       replicas: 4
     restart: on-failure
     environment:
       DATABASE_URL_FILE: /run/secrets/db_url
       SESSION_SECRET_FILE: /run/secrets/secret_key
+      MONGO_URL: mongodb://chat_mongo_db:27017/chatapp
     secrets:
       - secret_key
       - db_url
@@ -51,3 +59,4 @@ secrets:
 
 volumes:
   chat-data:
+  chat-mongo-data:
