@@ -1,0 +1,36 @@
+<div class="flex gap-8 sticky top-0 pt-4 bg-white items-center">
+  <a href="/rooms" class="text-lg"><span
+      data-feather="arrow-left"
+    ></span></a>
+  <h1 class="font-bold text-xl">
+    {{room.name}}
+  </h1>
+</div>
+<div class="flex flex-col gap-3 my-4" id="event-area">
+  {{#each events as |event|}}
+    {{#if (isEqual event.title "message")}}
+      {{> message-box event}}
+    {{else}}
+      {{#if (isEqual event.title "user-joined")}}
+        <div class="mx-auto bg-gray-100 text-sm text-gray-500 rounded-md p-1">{{dateFormat timestamp "DD/MM/YYYY, HH:mm a"}} - {{event.user.firstName}} {{event.user.lastName}} joined.</div>
+      {{else}}
+        {{#if (isEqual event.title "user-left")}}
+          <div class="mx-auto bg-gray-100 text-sm text-gray-500 rounded-md p-1">{{dateFormat timestamp "DD/MM/YYYY, HH:mm a"}} - {{event.user.firstName}} {{event.user.lastName}} left.</div>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  {{/each}}
+</div>
+<div class="flex gap-4 mt-4 fixed bottom-4 w-[60%]">
+  <input
+    id="message-input"
+    type="text"
+    class="border rounded-md px-2 flex-grow"
+    placeholder="Type a message..."
+  />
+  <button id="send-button">
+    <span data-feather="send"></span>
+  </button>
+</div>
+<script src="/js/primus.js"></script>
+<script src="/js/room.js"></script>
