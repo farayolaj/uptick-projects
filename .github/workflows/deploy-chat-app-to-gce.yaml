@@ -70,4 +70,4 @@ jobs:
       - name: "Copy compose.yaml and nginx.conf to server"
         run: "gcloud compute scp db-sync-chat-app/compose.yaml db-sync-chat-app/nginx.conf uptick-chat-app:~/"
       - name: "Run docker compose up"
-        run: "gcloud compute ssh uptick-chat-app -- docker compose up --remove-orphans -d"
+        run: "gcloud compute ssh uptick-chat-app -- sudo docker compose up --remove-orphans -d"
