@@ -24,7 +24,7 @@ services:
       - chat_db
       - chat_mongo_db
     deploy:
-      replicas: 4
+      replicas: 1
     restart: on-failure
     environment:
       DATABASE_URL_FILE: /run/secrets/db_url
@@ -42,7 +42,7 @@ services:
       - chat_app
     restart: on-failure
     ports:
-      - "4000:4000"
+      - "80:4000"
 
 networks:
   default:
