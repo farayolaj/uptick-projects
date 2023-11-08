@@ -24,7 +24,7 @@ services:
       - chat_db
       - chat_mongo_db
     deploy:
-      replicas: 3
+      replicas: 1
     restart: on-failure
     environment:
       DATABASE_URL_FILE: /run/secrets/db_url
