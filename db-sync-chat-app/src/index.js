@@ -1,7 +1,11 @@
 import { createServer } from "http";
 import app from "./app.js";
 import config from "./config.js";
+import { getLogger } from "./logger/index.js";
 import { initPrimus } from "./primus.js";
+
+const logger = getLogger();
+logger.info("Starting app...");
 
 const server = createServer(app);
 let liveServer;
@@ -24,29 +28,29 @@ if (!config.isProduction) {
 initPrimus(server);
 
 server.listen(config.port, () => {
-  console.log(`Server listening at http://localhost:${config.port}`);
+  logger.info(`Server listening at http://localhost:${config.port}`);
 });
 
 process.on("SIGTERM", () => {
-  console.log("\nSIGTERM signal received: closing server...");
+  logger.info("\nSIGTERM signal received: closing server...");
 
   if (liveServer) {
     liveServer.close(() => console.log("Live reload disconnected"));
   }
 
   server.close(() => {
-    console.log("Server closed");
+    logger.infog("Server closed");
   });
 });
 
 process.on("SIGINT", () => {
-  console.log("\nSIGINT signal received: closing server...");
+  logger.info("\nSIGINT signal received: closing server...");
 
   if (liveServer) {
     liveServer.close(() => console.log("Live reload disconnected"));
   }
 
   server.close(() => {
-    console.log("Server closed");
+    logger.info("Server closed");
   });
 });

@@ -3,10 +3,13 @@ import { engine } from "express-handlebars";
 import handlebarsDateFormat from "handlebars-dateformat";
 import { join } from "path";
 import { collectDefaultMetrics, register } from "prom-client";
+import responseTime from "response-time";
 import { fileURLToPath } from "url";
 import connectToMongoDb from "./db/mongo.js";
 import { connectToDb } from "./db/relational.js";
 import { authMiddleware } from "./middlewares/auth.js";
+import { logError } from "./middlewares/error-logger.js";
+import { logResponseTime } from "./middlewares/response-time-logger.js";
 import sessionMiddleware from "./middlewares/session.js";
 import authRouter from "./routes/auth.js";
 import roomRouter from "./routes/rooms.js";
@@ -53,11 +56,13 @@ app.get("/metrics", async (_req, res) => {
   }
 });
 
+app.use(responseTime(logResponseTime));
 app.use("/", authRouter);
 app.use(authMiddleware);
 app.get("/", (req, res) => {
   res.redirect("/rooms");
 });
 app.use("/rooms", roomRouter);
+app.use(logError);
 
 export default app;

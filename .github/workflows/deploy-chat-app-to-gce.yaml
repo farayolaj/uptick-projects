@@ -39,17 +39,6 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
-      - id: "auth"
-        name: "Authenticate to Google Cloud"
-        uses: "google-github-actions/auth@v1"
-        with:
-          create_credentials_file: true
-          workload_identity_provider: "projects/507296512815/locations/global/workloadIdentityPools/ci-cd-pool/providers/github"
-          service_account: "uptick-service-account@eazy-run-2022.iam.gserviceaccount.com"
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-        with:
-          version: ">= 363.0.0"
       - name: "Log in to Docker Hub"
         uses: "docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a"
         with:
@@ -67,6 +56,17 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v1"
+        with:
+          create_credentials_file: true
+          workload_identity_provider: "projects/507296512815/locations/global/workloadIdentityPools/ci-cd-pool/providers/github"
+          service_account: "uptick-service-account@eazy-run-2022.iam.gserviceaccount.com"
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+        with:
+          version: ">= 363.0.0"
       - name: "Copy compose.yaml and nginx.conf to server"
         run: "gcloud compute scp db-sync-chat-app/compose.yaml db-sync-chat-app/nginx.conf farayolaj@uptick-chat-app:~/"
       - name: "Run docker compose up"

@@ -30,9 +30,11 @@ services:
       DATABASE_URL_FILE: /run/secrets/db_url
       SESSION_SECRET_FILE: /run/secrets/secret_key
       MONGO_URL: mongodb://chat_mongo_db:27017/chatapp
+      LOKI_URL_FILE: /run/secrets/loki_url
     secrets:
       - secret_key
       - db_url
+      - loki_url
 
   nginx:
     image: nginx:stable-alpine
@@ -56,6 +58,8 @@ secrets:
     file: .secrets/db_password.txt
   db_url:
     file: .secrets/db_url.txt
+  loki_url:
+    file: .secrets/loki_url.txt
 
 volumes:
   chat-data:
