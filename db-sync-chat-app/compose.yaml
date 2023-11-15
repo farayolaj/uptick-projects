@@ -17,7 +17,7 @@ services:
       - chat-mongo-data:/data/db
 
   chat_app:
-    image: farayolaj/uptick-chat-app-db-sync
+    image: farayolaj/uptick-chat-app-db-sync:main
     expose:
       - "5000"
     depends_on:
