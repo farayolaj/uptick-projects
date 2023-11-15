@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from "winston";
 import LokiTransport from "winston-loki";
-import config from "../config";
+import config from "../config.js";
 
 let logger;
 
