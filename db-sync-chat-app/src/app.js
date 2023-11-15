@@ -2,6 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import handlebarsDateFormat from "handlebars-dateformat";
 import { join } from "path";
+import { collectDefaultMetrics, register } from "prom-client";
 import { fileURLToPath } from "url";
 import connectToMongoDb from "./db/mongo.js";
 import { connectToDb } from "./db/relational.js";
@@ -9,6 +10,8 @@ import { authMiddleware } from "./middlewares/auth.js";
 import sessionMiddleware from "./middlewares/session.js";
 import authRouter from "./routes/auth.js";
 import roomRouter from "./routes/rooms.js";
+
+collectDefaultMetrics();
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
@@ -40,6 +43,15 @@ app.engine(
 
 await connectToDb();
 await connectToMongoDb();
+
+app.get("/metrics", async (_req, res) => {
+  try {
+    res.set("Content-Type", register.contentType);
+    res.end(await register.metrics());
+  } catch (err) {
+    res.status(500).end(err);
+  }
+});
 
 app.use("/", authRouter);
 app.use(authMiddleware);
