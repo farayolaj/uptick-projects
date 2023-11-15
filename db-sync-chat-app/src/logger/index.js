@@ -12,7 +12,8 @@ const initializeLogger = () => {
   logger = createLogger({
     transports: [
       new LokiTransport({
-        host: config.lokiUrl,
+        host: config.loki.host,
+        basicAuth: config.loki.basicAuth,
         labels: { app: "chat-app" },
         json: true,
         format: format.json(),

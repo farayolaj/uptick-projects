@@ -22,7 +22,8 @@ file_env() {
 
 file_env "DATABASE_URL"
 file_env "SESSION_SECRET"
-file_env "LOKI_URL"
+file_env "LOKI_HOST"
+file_env "LOKI_BASIC_AUTH"
 
 pnpm migrate
 pnpm start

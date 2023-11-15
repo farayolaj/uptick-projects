@@ -7,5 +7,8 @@ export default {
   port: process.env.PORT || 5000,
   isProduction: process.env.NODE_ENV === "production",
   isTest: process.env.NODE_ENV === "test",
-  lokiUrl: process.env.LOKI_URL || "",
+  loki: {
+    host: process.env.LOKI_HOST || "",
+    basicAuth: process.env.LOKI_BASIC_AUTH || "",
+  },
 };
