@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import config from "../config.js";
+import { getLogger } from "../logger/index.js";
+
+const logger = getLogger();
 
 const { Schema } = mongoose;
 
@@ -7,7 +10,7 @@ export default async function connectToMongoDb() {
   await mongoose.connect(config.db.mongoUrl, {
     autoCreate: true,
   });
-  console.log("Connected to mongo database");
+  logger.info("Connected to mongo database");
 }
 
 const userSchema = Schema({

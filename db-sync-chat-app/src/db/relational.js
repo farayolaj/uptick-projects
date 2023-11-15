@@ -1,5 +1,8 @@
 import knex from "knex";
 import config from "../config.js";
+import { getLogger } from "../logger/index.js";
+
+const logger = getLogger();
 
 /**
  * @type {ReturnType<typeof knex>}
@@ -17,7 +20,7 @@ export async function connectToDb() {
 
     try {
       await db.raw("SELECT 1");
-      console.log("Connected to postgres database");
+      logger.info("Connected to postgres database");
     } catch (error) {
       console.error("Could not connect to postgres database", error);
       process.exit(1);

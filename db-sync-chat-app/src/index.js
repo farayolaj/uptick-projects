@@ -35,7 +35,7 @@ process.on("SIGTERM", () => {
   logger.info("\nSIGTERM signal received: closing server...");
 
   if (liveServer) {
-    liveServer.close(() => console.log("Live reload disconnected"));
+    liveServer.close(() => logger.info("Live reload disconnected"));
   }
 
   server.close(() => {
@@ -47,7 +47,7 @@ process.on("SIGINT", () => {
   logger.info("\nSIGINT signal received: closing server...");
 
   if (liveServer) {
-    liveServer.close(() => console.log("Live reload disconnected"));
+    liveServer.close(() => logger.info("Live reload disconnected"));
   }
 
   server.close(() => {

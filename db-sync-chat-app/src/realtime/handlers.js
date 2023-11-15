@@ -1,4 +1,7 @@
+import { getLogger } from "../logger/index.js";
 import eventModel from "../models/events.js";
+
+const logger = getLogger();
 
 /**
  *
@@ -10,7 +13,7 @@ async function handleUserJoin(spark, data) {
   const { roomId } = data;
 
   spark.join(roomId, async function () {
-    console.log(`User[${session.user.id}] joined Room[${roomId}]`);
+    logger.info(`User[${session.user.id}] joined Room[${roomId}]`);
 
     const event = await eventModel.createEvent({
       title: "user-joined",
@@ -31,7 +34,7 @@ function handleUserLeave(spark, data) {
   const { roomId } = data;
 
   spark.leave(roomId, async function () {
-    console.log(`User[${session.user.id}] left Room[${roomId}]`);
+    logger.info(`User[${session.user.id}] left Room[${roomId}]`);
 
     const event = await eventModel.createEvent({
       title: "user-left",
@@ -51,7 +54,7 @@ async function handleMessage(spark, data) {
   const session = spark.request.session;
   const { roomId } = data;
 
-  console.log(`User[${session.user.id}] sent a message`);
+  logger.info(`User[${session.user.id}] sent a message`);
 
   const event = await eventModel.createEvent({
     title: "message",
