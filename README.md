@@ -91,3 +91,19 @@ Add automated tests to your application from Week 6, Setup a CI/CD pipeline usin
 7. Then, I wrote the Github Actions workflow that can be found [here](https://github.com/farayolaj/uptick-projects/blob/main/.github/workflows/deploy-chat-app-to-gce.yaml).
 8. I made a mistake with configuring the application port so the application was not loading on the first successful deployment. It took me a while to notice it, but just a second to fix.
 9. I submitted the link to this repository and the link to the deployed application.
+
+### Week 8
+
+#### Task
+
+Set up and implement a logging (performance monitoring) system in your app from W7.
+
+**Extra credits:** Monitor more than just application logs.
+
+#### Result
+
+1. I used Prometheus and Grafana for this task.
+2. It took a while to get used to Grafana's interface. At first, there seemed to be a lot going on. But once I knew what I wanted to do, it became easier.
+3. I used [prom-client](https://www.npmjs.com/package/prom-client) to expose a nodejs exporter for prometheus.
+4. I also used Grafana Loki for log management. To connect it to my app, I used [winston-loki](https://www.npmjs.com/package/winston-loki) to create a custom winston transporter.
+5. I submitted a [loom recording](https://www.loom.com/share/67c6645e8a30448c80148c01c646b919?sid=d014e8cf-1d7e-4195-a05c-9e248382aa0f) showing the grafana dashboard and logs. I also submitted the link to this repository.
