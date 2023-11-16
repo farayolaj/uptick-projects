@@ -69,5 +69,7 @@ jobs:
           version: ">= 363.0.0"
       - name: "Copy compose.yaml and nginx.conf to server"
         run: "gcloud compute scp db-sync-chat-app/compose.yaml db-sync-chat-app/nginx.conf farayolaj@uptick-chat-app:~/"
+      - name: "Run docker compose pull"
+        run: "gcloud compute ssh farayolaj@uptick-chat-app -- sudo docker compose pull"
       - name: "Run docker compose up"
         run: "gcloud compute ssh farayolaj@uptick-chat-app -- sudo docker compose up --remove-orphans -d"
